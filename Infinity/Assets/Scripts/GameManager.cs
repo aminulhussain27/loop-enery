@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
 
         float nodeWidth = gridParent.GetComponent<RectTransform>().rect.width / Constants.GridWeidth;
         float nodeHeight = gridParent.GetComponent<RectTransform>().rect.height / Constants.GridHeight;
-        Debug.Log("node " + nodeWidth + " / " + nodeHeight);
+
         foreach (NodeData nodeData in levelData.nodes)
         {
             GameObject newNode = Instantiate(nodePrefab, gridParent);
@@ -54,9 +54,8 @@ public class GameManager : MonoBehaviour
             float posX = nodeData.x * nodeWidth - gridParent.GetComponent<RectTransform>().rect.width / 2 + nodeWidth / 2;
             float posY = nodeData.y * nodeHeight - gridParent.GetComponent<RectTransform>().rect.height / 2 + nodeHeight / 2;
             newNode.transform.localPosition = new Vector3(posX, posY, 0);
-            nodeComponent.Initialize(nodeData, allImages[nodeData.imageIndex]);
-
-            grid[nodeData.y, nodeData.x] = nodeComponent;
+            nodeComponent.Initialize(nodeData, allImages[nodeData.itemIndex]);
+            grid[nodeData.x, nodeData.y] = nodeComponent;
             allNodes.Add(nodeComponent);
         }
     }
@@ -85,8 +84,8 @@ public class GameManager : MonoBehaviour
             if (node.RotationState != node.CorrectRotationState)
                 return;
         }
-        levelCompleteEvent?.Invoke(currentLevel);
         Debug.Log("Level completed: " + currentLevel);
         PlayerProgressManager.Instance.SaveProgress(currentLevel);
+        levelCompleteEvent?.Invoke(currentLevel);
     }
 }

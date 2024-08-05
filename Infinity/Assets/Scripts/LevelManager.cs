@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
@@ -8,6 +9,8 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField] private Transform levelGridParent;
     [SerializeField] private GameObject levelButtonPrefab;
+
+    private List<LevelButton> allLevelButtons;
 
     private void Awake()
     {
@@ -24,6 +27,8 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
+        GameManager.Instance.levelCompleteEvent += UpdateLevelButtonsData;
+        allLevelButtons = new List<LevelButton>();
         LoadLevelData();
         DisplayLevelButtons();
     }
@@ -48,8 +53,26 @@ public class LevelManager : MonoBehaviour
         {
             GameObject buttonObject = Instantiate(levelButtonPrefab, levelGridParent);
             LevelButton levelButton = buttonObject.GetComponent<LevelButton>();
+            allLevelButtons.Add(levelButton);
             bool isUnlocked = i < PlayerProgressManager.Instance.progress.highestLevelUnlocked;
             levelButton.Initialize(i, isUnlocked);
         }
+    }
+
+    private void UpdateLevelButtonsData(int level)
+    {
+        Debug.Log("Max unlocked: " + PlayerProgressManager.Instance.progress.highestLevelUnlocked);
+        if (allLevelButtons != null && allLevelButtons.Count > 0)
+        {
+            for (int i = 0; i < allLevelButtons.Count; i++)
+            {
+                allLevelButtons[i].Initialize(i, i < PlayerProgressManager.Instance.progress.highestLevelUnlocked);
+            }
+        }
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.Instance.levelCompleteEvent -= UpdateLevelButtonsData;
     }
 }

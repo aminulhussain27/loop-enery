@@ -28,15 +28,15 @@ public class Node : MonoBehaviour
     public void Initialize(NodeData data, Sprite nodeSprite)
     {
         nodeData = data;
-        DefaultRotationState = nodeData.defaultRotationState;
-        CorrectRotationState = nodeData.correctRotationState;
-        if (nodeData.imageIndex == 3)//If index==3 put only 0,1
+        if (nodeData.itemIndex == 3)//If index==3 put only 0,1
         {
             SimplifyRotationDataForLine();
         }
+        DefaultRotationState = nodeData.startState;
+        CorrectRotationState = nodeData.correctState;
         nodeImage.transform.rotation = Quaternion.Euler(0, 0, -DefaultRotationState * 90); // Assuming each state is 45 degrees
         rotationState = DefaultRotationState;
-        label.text = nodeData.x.ToString() + "," + nodeData.y.ToString();
+        label.text = rotationState + "/" + nodeData.correctState +" "+nodeData.x.ToString() + "," + nodeData.y.ToString();
         nodeImage.sprite = nodeSprite;
     }
 
@@ -48,12 +48,15 @@ public class Node : MonoBehaviour
 
     private void RotateNode()
     {
-        rotationState = (rotationState + 1) % 4;
-        if (nodeData.imageIndex == 3)
-            rotationState = rotationState % 2 == 0 ? rotationState % 2 : rotationState % 3;
         //nodeImage.transform.Rotate(0, 0, -90);
         if (rotateCoroutine == null)
+        {
+            rotationState = (rotationState + 1) % 4;
+            if (nodeData.itemIndex == 3)
+                rotationState = rotationState % 2 == 0 ? rotationState % 2 : rotationState % 3;
+            label.text = rotationState + "/" + nodeData.correctState + "  (" + nodeData.x.ToString() + "," + nodeData.y.ToString() + ")";
             rotateCoroutine = StartCoroutine(RotateWithDelay());
+        }
         //Debug.Log(rotationState + "/" + nodeData.correctRotationState +"  ("+nodeData.x +","+ nodeData.y+")");
     }
 
@@ -76,11 +79,11 @@ public class Node : MonoBehaviour
 
     private void SimplifyRotationDataForLine()
     {
-        nodeData.defaultRotationState = nodeData.defaultRotationState % 2 == 0 ? nodeData.defaultRotationState % 2 :
-    nodeData.defaultRotationState % 3;
+        nodeData.startState = nodeData.startState % 2 == 0 ? nodeData.startState % 2 :
+    nodeData.startState % 3;
 
-        nodeData.correctRotationState = nodeData.correctRotationState % 2 == 0 ? nodeData.correctRotationState % 2 :
-            nodeData.correctRotationState % 3;
+        nodeData.correctState = nodeData.correctState % 2 == 0 ? nodeData.correctState % 2 :
+            nodeData.correctState % 3;
     }
 }
 

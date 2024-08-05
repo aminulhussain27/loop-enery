@@ -16,11 +16,11 @@ public class LevelButton : MonoBehaviour
         button.interactable = isUnlocked;
         lockIcon.enabled = !isUnlocked;
         playIcon.enabled = isUnlocked;
-        button.onClick.AddListener(() => OnPlayButtonClick());
-    }
 
-    private void OnPlayButtonClick()
-    {
-        GameManager.Instance.StartLevel(levelIndex);
+        button.onClick.AddListener(() =>
+        {
+            if (isUnlocked)
+                GameManager.Instance.StartLevel(levelIndex);
+        });
     }
 }

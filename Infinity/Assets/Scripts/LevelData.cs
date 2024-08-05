@@ -3,11 +3,11 @@ using System;
 [Serializable]
 public class NodeData
 {
-    public int defaultRotationState;
-    public int correctRotationState;
+    public int startState;
+    public int correctState;
     public int x;
     public int y;
-    public int imageIndex;//0:Source, 1: Light 2: curve, 3: Line
+    public int itemIndex;//0:Source, 1: Light 2: curve, 3: Line
 }
 
 [Serializable]

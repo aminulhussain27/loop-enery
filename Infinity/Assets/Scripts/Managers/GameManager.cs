@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
 
         float nodeWidth = gridParent.GetComponent<RectTransform>().rect.width / Constants.GridWeidth;
         float nodeHeight = gridParent.GetComponent<RectTransform>().rect.height / Constants.GridHeight;
-
+        Debug.Log(nodeWidth + "/" + nodeHeight);
         foreach (NodeData nodeData in levelData.nodes)
         {
             GameObject newNode = Instantiate(nodePrefab, gridParent);

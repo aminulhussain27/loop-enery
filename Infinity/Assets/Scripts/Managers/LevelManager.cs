@@ -39,7 +39,6 @@ public class LevelManager : MonoBehaviour
         if (jsonData != null)
         {
             levels = JsonUtility.FromJson<Levels>(jsonData.text);
-            Debug.Log("Level data loaded successfully.");
         }
         else
         {

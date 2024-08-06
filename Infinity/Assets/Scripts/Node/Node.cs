@@ -19,11 +19,9 @@ public class Node : MonoBehaviour
 
     private void Start()
     {
-        nodeButton.onClick.RemoveAllListeners();
+        nodeButton.onClick.RemoveListener(OnButtonClick);
         nodeButton.onClick.AddListener(OnButtonClick);
     }
-
-
 
     public void Initialize(NodeData data, Sprite nodeSprite)
     {

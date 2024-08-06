@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,8 +9,9 @@ public class GameManager : MonoBehaviour
 
     public Action<int> levelCompleteEvent;
     public Action<int> levelStartEvent;
-    public GameObject nodePrefab;
-    public Transform gridParent;
+
+    [SerializeField] private GameObject nodePrefab;
+    [SerializeField] private Transform gridParent;
     [SerializeField] private Sprite[] allImages;
 
     private Node[,] grid;
@@ -31,7 +33,6 @@ public class GameManager : MonoBehaviour
 
     public void InitializeGrid(LevelData levelData)
     {
-        //int gridSize = Mathf.CeilToInt(Mathf.Sqrt(levelData.nodes.Length));
         grid = new Node[Constants.GridWeidth, Constants.GridHeight];
         if (allNodes == null)
             allNodes = new List<Node>();
@@ -50,7 +51,7 @@ public class GameManager : MonoBehaviour
             GameObject newNode = Instantiate(nodePrefab, gridParent);
             Node nodeComponent = newNode.GetComponent<Node>();
 
-            // Position node according to its row and column
+            // Positioning node according to its row and column
             float posX = nodeData.x * nodeWidth - gridParent.GetComponent<RectTransform>().rect.width / 2 + nodeWidth / 2;
             float posY = nodeData.y * nodeHeight - gridParent.GetComponent<RectTransform>().rect.height / 2 + nodeHeight / 2;
             newNode.transform.localPosition = new Vector3(posX, posY, 0);
@@ -58,6 +59,7 @@ public class GameManager : MonoBehaviour
             grid[nodeData.x, nodeData.y] = nodeComponent;
             allNodes.Add(nodeComponent);
         }
+        StartCoroutine(ShowGridInitializeEffect());
     }
 
     public void StartLevel(int levelIndex)
@@ -87,5 +89,16 @@ public class GameManager : MonoBehaviour
         Debug.Log("Level completed: " + currentLevel);
         PlayerProgressManager.Instance.SaveProgress(currentLevel);
         levelCompleteEvent?.Invoke(currentLevel);
+    }
+
+    private IEnumerator ShowGridInitializeEffect()
+    {
+        yield return new WaitForSeconds(0.2f);
+
+        foreach (Node node in allNodes)
+        {
+            node.gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.2f);
+        }
     }
 }

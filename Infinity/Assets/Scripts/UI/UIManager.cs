@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private GameObject gridPanel;
     [SerializeField] private Button homeButton;
+    [SerializeField] private GameObject particlePrefab;
 
 
     private void Start()
@@ -17,7 +18,7 @@ public class UIManager : MonoBehaviour
         GameManager.Instance.levelCompleteEvent += OnLevelComplete;
         GameManager.Instance.levelStartEvent += OnLevelStart;
 
-        homeButton.onClick.RemoveAllListeners();
+        homeButton.onClick.RemoveListener(OnHomeButtonClick);
         homeButton.onClick.AddListener(() =>
         {
             OnHomeButtonClick();
@@ -37,6 +38,8 @@ public class UIManager : MonoBehaviour
         levelText.text = "Level " + (obj +1).ToString() +" Completed";
         StartCoroutine(ShowGameOverPopup());
         UpdateScoreUI();
+        ShowLevelCompleteParticle();
+        SoundManager.Instance.PlaySound(SoundType.LevelComplete);
     }
 
     private void OnHomeButtonClick()
@@ -48,7 +51,7 @@ public class UIManager : MonoBehaviour
 
     private IEnumerator ShowGameOverPopup()
     {
-        yield return new WaitForSeconds(2.8f);
+        yield return new WaitForSeconds(3f);
         gameOverPanel.SetActive(true);
     }
 
@@ -64,7 +67,7 @@ public class UIManager : MonoBehaviour
         prevScore = prevScore > 0 ? prevScore : 0;
         int endScore = PlayerProgressManager.Instance.progress.score;
         float elapsed = 0f;
-
+        SoundManager.Instance.PlaySound(SoundType.ScoreIncreasing);
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
@@ -80,5 +83,12 @@ public class UIManager : MonoBehaviour
     private void UpdateScore()
     {
         scoreText.text = PlayerProgressManager.Instance.progress.score.ToString();
+    }
+
+    private void ShowLevelCompleteParticle()
+    {
+        GameObject particle = Instantiate(particlePrefab);
+
+        Destroy(particle, 4);
     }
 }

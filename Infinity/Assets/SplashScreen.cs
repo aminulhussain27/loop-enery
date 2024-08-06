@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,10 +5,9 @@ public class SplashScreen : MonoBehaviour
 {
     [SerializeField] private Button playButton;
 
-    private void Start()
+    void Awake()
     {
-        playButton.onClick.RemoveAllListeners();
-        playButton.onClick.AddListener(()=>
+        playButton.onClick.AddListener(() =>
         {
             OnPlaybuttonclick();
         });

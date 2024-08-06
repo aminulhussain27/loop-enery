@@ -55,7 +55,7 @@ public class SpriteAnimator : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
-        //image.color = toColor;
+        //image.color = toColor;244C8A  273A78 189DBA-MHMCAM
     }
 
     private IEnumerator ChangeSize(Vector3 fromSize, Vector3 toSize, float duration)

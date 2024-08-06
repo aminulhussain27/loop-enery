@@ -45,15 +45,19 @@ public class GameManager : MonoBehaviour
 
         float nodeWidth = gridParent.GetComponent<RectTransform>().rect.width / Constants.GridWeidth;
         float nodeHeight = gridParent.GetComponent<RectTransform>().rect.height / Constants.GridHeight;
-        Debug.Log(nodeWidth + "/" + nodeHeight);
+        float minSize = nodeHeight < nodeWidth ? nodeHeight : nodeWidth;
+
+        //Debug.Log(nodeWidth + "/" + nodeHeight);
         foreach (NodeData nodeData in levelData.nodes)
         {
             GameObject newNode = Instantiate(nodePrefab, gridParent);
             Node nodeComponent = newNode.GetComponent<Node>();
 
-            float posX = nodeData.x * nodeWidth - gridParent.GetComponent<RectTransform>().rect.width / 2 + nodeWidth / 2;
-            float posY = nodeData.y * nodeHeight - gridParent.GetComponent<RectTransform>().rect.height / 2 + nodeHeight / 2;
+            float posX = nodeData.x * minSize - gridParent.GetComponent<RectTransform>().rect.width / 2 + nodeWidth / 2;
+            float posY = nodeData.y * minSize - gridParent.GetComponent<RectTransform>().rect.height / 2 + nodeHeight / 2;
             newNode.transform.localPosition = new Vector3(posX, posY, 0);
+            newNode.GetComponent<RectTransform>().sizeDelta = new Vector2(minSize, minSize);
+
             nodeComponent.Initialize(nodeData, allImages[nodeData.itemIndex]);
             grid[nodeData.x, nodeData.y] = nodeComponent;
             allNodes.Add(nodeComponent);

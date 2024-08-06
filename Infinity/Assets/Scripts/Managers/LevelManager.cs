@@ -48,26 +48,29 @@ public class LevelManager : MonoBehaviour
 
     private void DisplayLevelButtons()
     {
-        for (int i = 0; i < levels.levels.Length; i++)
+        for (int i = 0; i < levels.levels.Length * 2; i++)
         {
             GameObject buttonObject = Instantiate(levelButtonPrefab, levelGridParent);
             LevelButton levelButton = buttonObject.GetComponent<LevelButton>();
             allLevelButtons.Add(levelButton);
-            bool isUnlocked = i < PlayerProgressManager.Instance.progress.highestLevelUnlocked;
-            levelButton.Initialize(i, isUnlocked);
+            levelButton.Initialize(i, IsLevelUnlocked(i));
         }
     }
 
     private void UpdateLevelButtonsData(int level)
     {
-        Debug.Log("Max unlocked: " + PlayerProgressManager.Instance.progress.highestLevelUnlocked);
         if (allLevelButtons != null && allLevelButtons.Count > 0)
         {
             for (int i = 0; i < allLevelButtons.Count; i++)
             {
-                allLevelButtons[i].Initialize(i, i < PlayerProgressManager.Instance.progress.highestLevelUnlocked);
+                allLevelButtons[i].Initialize(i, IsLevelUnlocked(i));
             }
         }
+    }
+
+    private bool IsLevelUnlocked(int index)
+    {
+        return index <= PlayerProgressManager.Instance.progress.highestLevelUnlocked;
     }
 
     private void OnDestroy()

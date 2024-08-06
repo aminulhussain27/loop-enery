@@ -89,6 +89,6 @@ public class UIManager : MonoBehaviour
     {
         GameObject particle = Instantiate(particlePrefab);
 
-        Destroy(particle, 4);
+        Destroy(particle, Constants.ParticleShowDuration);
     }
 }

@@ -27,7 +27,7 @@ public class PlayerProgressManager : MonoBehaviour
 
     public void SaveProgress(int currentlevel)
     {
-        if (progress.highestLevelUnlocked <= currentlevel + 1)
+        if (progress.highestLevelUnlocked <= currentlevel)
             progress.highestLevelUnlocked++;
         progress.score += Constants.ScorePerLevelComplete;
 
@@ -40,6 +40,6 @@ public class PlayerProgressManager : MonoBehaviour
 [Serializable]
 public class PlayerProgress
 {
-    public int highestLevelUnlocked = 1;
+    public int highestLevelUnlocked = 0;
     public int score = 0;
 }

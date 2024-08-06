@@ -32,9 +32,9 @@ public class Node : MonoBehaviour
         }
         DefaultRotationState = nodeData.startState;
         CorrectRotationState = nodeData.correctState;
-        nodeImage.transform.rotation = Quaternion.Euler(0, 0, -DefaultRotationState * 90); // Assuming each state is 45 degrees
+        nodeImage.transform.rotation = Quaternion.Euler(0, 0, -DefaultRotationState * 90);
         rotationState = DefaultRotationState;
-        label.text = rotationState + "/" + nodeData.correctState +" "+nodeData.x.ToString() + "," + nodeData.y.ToString();
+        //label.text = rotationState + "/" + nodeData.correctState +" "+nodeData.x.ToString() + "," + nodeData.y.ToString();
         nodeImage.sprite = nodeSprite;
     }
 
@@ -46,16 +46,14 @@ public class Node : MonoBehaviour
 
     private void RotateNode()
     {
-        //nodeImage.transform.Rotate(0, 0, -90);
         if (rotateCoroutine == null)
         {
             rotationState = (rotationState + 1) % 4;
             if (nodeData.itemIndex == 3)
                 rotationState = rotationState % 2 == 0 ? rotationState % 2 : rotationState % 3;
-            label.text = rotationState + "/" + nodeData.correctState + "  (" + nodeData.x.ToString() + "," + nodeData.y.ToString() + ")";
+           // label.text = rotationState + "/" + nodeData.correctState + "  (" + nodeData.x.ToString() + "," + nodeData.y.ToString() + ")";
             rotateCoroutine = StartCoroutine(RotateWithDelay());
         }
-        //Debug.Log(rotationState + "/" + nodeData.correctRotationState +"  ("+nodeData.x +","+ nodeData.y+")");
     }
 
     private IEnumerator RotateWithDelay()
@@ -64,9 +62,9 @@ public class Node : MonoBehaviour
         Quaternion targetRotation = initialRotation * Quaternion.Euler(0, 0, -90);
         float elapsed = 0f;
 
-        while (elapsed < 0.2f)
+        while (elapsed < Constants.GridAppearDelay)
         {
-            nodeImage.transform.rotation = Quaternion.Slerp(initialRotation, targetRotation, elapsed / 0.2f);
+            nodeImage.transform.rotation = Quaternion.Slerp(initialRotation, targetRotation, elapsed / Constants.GridAppearDelay);
             yield return null;
             elapsed += Time.deltaTime;
         }

@@ -8,3 +8,15 @@ public class SoundDataContainer : ScriptableObject
 {
     public List<SoundData> soundDataList;
 }
+
+
+public enum SoundType
+{
+    BackgroundMusic,
+    ButtonClick,
+    LevelComplete,
+    PopUp,
+    RotateWhoosh,
+    ScoreIncreasing,
+    NodeAppearing
+}

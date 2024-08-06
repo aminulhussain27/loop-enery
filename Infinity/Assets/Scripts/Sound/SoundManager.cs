@@ -1,30 +1,35 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using System;
 
 public class SoundManager : MonoBehaviour
 {
-    public static SoundManager instance;
+    public static SoundManager Instance;
 
     [SerializeField]
     private SoundDataContainer soundDataContainer;
 
     private Dictionary<SoundType, SoundData> soundDataDictionary;
-    private AudioSource backgroundMusicSource;
+
 
     void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
             InitializeSoundDataDictionary();
-            InitializeBackgroundMusic();
         }
         else
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        InitializeBackgroundMusic();
     }
 
     private void InitializeSoundDataDictionary()
@@ -41,7 +46,7 @@ public class SoundManager : MonoBehaviour
     {
         if (soundDataDictionary.TryGetValue(SoundType.BackgroundMusic, out SoundData backgroundMusicData))
         {
-            backgroundMusicSource = AudioSourcePool.instance.GetAudioSource();
+            AudioSource backgroundMusicSource = AudioSourcePool.instance.GetAudioSource();
             backgroundMusicSource.clip = backgroundMusicData.audioClip;
             backgroundMusicSource.volume = backgroundMusicData.volume;
             backgroundMusicSource.loop = backgroundMusicData.loop;
@@ -74,12 +79,4 @@ public class SoundManager : MonoBehaviour
             AudioSourcePool.instance.ReturnAudioSource(audioSource);
         }
     }
-}
-
-public enum SoundType
-{
-    BackgroundMusic,
-    ButtonClick,
-    LevelComplete,
-    PopUp
 }

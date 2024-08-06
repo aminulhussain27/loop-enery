@@ -15,17 +15,29 @@ MonoBehaviour:
   soundDataList:
   - soundType: 0
     audioClip: {fileID: 8300000, guid: ee5777cc62a7645d8affdd6fa857688f, type: 3}
-    volume: 0.2
+    volume: 0.4
     loop: 1
   - soundType: 1
     audioClip: {fileID: 8300000, guid: e1526b584a0a6454cb5aff4d3c8c8b0a, type: 3}
     volume: 1
     loop: 0
   - soundType: 2
-    audioClip: {fileID: 8300000, guid: 70c566dba058844e8b12ee6bd005540b, type: 3}
-    volume: 1
+    audioClip: {fileID: 8300000, guid: a826d862da963453db6ac3a5d5a9b94b, type: 3}
+    volume: 0.7
     loop: 0
   - soundType: 3
-    audioClip: {fileID: 8300000, guid: debf0088e5bf047ffb7c3522529bab1e, type: 3}
+    audioClip: {fileID: 8300000, guid: bffd729e70cd542ba891cbac2ba07898, type: 3}
     volume: 1
+    loop: 0
+  - soundType: 4
+    audioClip: {fileID: 8300000, guid: 8ce99d9a7226e4de58a49a899cd12a28, type: 3}
+    volume: 1
+    loop: 0
+  - soundType: 5
+    audioClip: {fileID: 8300000, guid: 56e0958b3011b48b6a5cda2965ca764d, type: 3}
+    volume: 0.8
+    loop: 0
+  - soundType: 6
+    audioClip: {fileID: 8300000, guid: a1c06974efbb34782938666e20598dde, type: 3}
+    volume: 0.5
     loop: 0

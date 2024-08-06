@@ -19,7 +19,7 @@ public class LevelButton : MonoBehaviour
 
         bool isCompleted = isUnlocked && PlayerProgressManager.Instance.progress.highestLevelUnlocked > levelIndex;
 
-        Debug.Log(levelIndex + " " + isUnlocked + " " + isCompleted + " max: " + PlayerProgressManager.Instance.progress.highestLevelUnlocked);
+        //Debug.Log(levelIndex + " " + isUnlocked + " " + isCompleted + " max: " + PlayerProgressManager.Instance.progress.highestLevelUnlocked);
 
         playIcon.enabled = isUnlocked && !isCompleted;
         tickIcon.enabled = isCompleted;
